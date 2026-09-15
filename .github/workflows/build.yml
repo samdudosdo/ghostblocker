@@ -16,9 +16,12 @@ jobs:
           distribution: temurin
           java-version: 17
 
+      - name: Strip BOM
+        run: |
+          find . -type f \( -name "*.gradle" -o -name "*.java" -o -name "*.xml" \) -exec sed -i '1s/^\xEF\xBB\xBF//' {} \;
+
       - name: Build with Gradle
         run: |
-          yes | sdkmanager --licenses || true
           gradle wrapper --gradle-version 7.5
           ./gradlew assembleDebug
 
