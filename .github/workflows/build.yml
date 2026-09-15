@@ -16,11 +16,9 @@ jobs:
           distribution: temurin
           java-version: 17
 
-      - name: Setup Android SDK
-        uses: android-actions/setup-android@v3
-
       - name: Build with Gradle
         run: |
+          yes | sdkmanager --licenses || true
           gradle wrapper --gradle-version 7.5
           ./gradlew assembleDebug
 
