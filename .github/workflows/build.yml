@@ -20,10 +20,13 @@ jobs:
         run: |
           find . -type f \( -name "*.gradle" -o -name "*.java" -o -name "*.xml" \) -exec sed -i '1s/^\xEF\xBB\xBF//' {} \;
 
+      - name: Setup Gradle 7.5
+        uses: gradle/actions/setup-gradle@v3
+        with:
+          gradle-version: 7.5
+
       - name: Build with Gradle
-        run: |
-          gradle wrapper --gradle-version 7.5
-          ./gradlew assembleDebug
+        run: gradle assembleDebug --no-daemon
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
